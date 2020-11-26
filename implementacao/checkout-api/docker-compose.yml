@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    container_name: mysql_standalone
+    image: mysql:5.6
+    ports: 
+      - '3306:3306'
+    environment: 
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=db_mateus
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - ./docker/volume_mysql:/var/lib/mysql
