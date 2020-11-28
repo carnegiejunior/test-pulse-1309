@@ -1,9 +1,0 @@
-FROM adoptopenjdk/openjdk11
-LABEL mantainer "Carnegie <carnegiejunior@gmail.com>"
-RUN mkdir /opt/app
-VOLUME /opt/app
-WORKDIR /opt/app
-COPY checkout-api/target/checkout-api-1.0.0.jar /opt/app/checkout-api-1.0.0.jar
-ENTRYPOINT ["java","-Dspring.profiles.active=prod", "-jar","/opt/app/checkout-api-1.0.0.jar"]
-EXPOSE 8000:8080
-

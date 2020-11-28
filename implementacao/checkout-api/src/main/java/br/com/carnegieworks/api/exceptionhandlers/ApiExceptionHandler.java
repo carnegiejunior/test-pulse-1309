@@ -28,28 +28,7 @@ import br.com.carnegieworks.domain.exception.NegocioException;
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-	
-	
-//	@ExceptionHandler(DataIntegrityViolationException.class)
-//	public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex,
-//			HttpHeaders headers, HttpStatus status, WebRequest request){
-//		
-//		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
-//		String detail = ex.getMessage();
-//		Problem problem = createProblemBuilder(status, problemType, detail).build();
-//		return handleExceptionInternal(ex, problem, headers, status, request);
-//	}
-	
-	
-//	@ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-//	public ResponseEntity<Object> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex,
-//			HttpHeaders headers, HttpStatus status, WebRequest request){
-//		
-//		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
-//		String detail = ex.getMessage();
-//		Problem problem = createProblemBuilder(status, problemType, detail).build();
-//		return handleExceptionInternal(ex, problem, headers, status, request);
-//	}
+	//InvalidDataAccessApiUsageException
 	
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
@@ -72,7 +51,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-	
 
 		String path = joinPath(ex.getPath());
 		
@@ -142,14 +120,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
-	
 		
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		ProblemType problemType = ProblemType.ERRO_VIOLACAO_RESTRICAO_ENTIDADE;
 
 		String detail = ex.getRootCause().getMessage();
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
-
 		
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
@@ -158,22 +134,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
-	//	Throwable rootCause = ExceptionUtils.getRootCause(ex);
-		
-		
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		ProblemType problemType = ProblemType.ERRO_VIOLACAO_RESTRICAO_ENTIDADE;
 
 		String detail = ex.getMessage();
 		Problem problem = createProblemBuilder(status, problemType, detail).build();
-
-		
-//		if (rootCause instanceof DataIntegrityViolationException) {
-//			return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
-//		}
 		
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
+	
+	
+	
+	
+	// ===================================  Seção utilitária  ===================================================
 
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,

@@ -40,11 +40,12 @@ public class Produto {
 	@NotBlank(message = "A descrição do produto deve ser preenchida")
 	private String descricao;
 
-	@Column(name = "quantidade", nullable = false)
+	@Column(name = "quantidade", nullable = false,length = 10, precision = 2)
 	@NotNull(message = "Uma quantidade de produto deve ser informada")
+	@JsonProperty("quantidade")
 	private BigDecimal quantidade = BigDecimal.ZERO;
 	
-	@Column(name = "preco_unitario", nullable = false)
+	@Column(name = "preco_unitario", nullable = false,length = 10, precision = 2)
 	@NotNull(message = "O preço unitário do produto deve ser informado")
 	@JsonProperty("preco-unitario")
 	private BigDecimal precoUnitario = BigDecimal.ZERO;

@@ -33,7 +33,7 @@ public class ProdutoDTO {
 	@NotNull(message = "Uma quantidade de produto deve ser informada")
 	private BigDecimal quantidade = BigDecimal.ZERO;
 	
-	@Column(name = "preco_unitario", nullable = false)
+	@Column(name = "preco_unitario", nullable = false, length = 10, precision = 2)
 	@NotNull(message = "O precço unitário do produto deve ser informado")
 	@JsonProperty("preco-unitario")
 	private BigDecimal precoUnitario = BigDecimal.ZERO;
