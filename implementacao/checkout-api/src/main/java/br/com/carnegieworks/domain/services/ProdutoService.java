@@ -33,15 +33,15 @@ public class ProdutoService {
 		return produtoRepository.save(produto);
 	}
 
-	public void delete(Long produtoId) {
+	public void delete(Long id) {
 		try {
-			produtoRepository.deleteById(produtoId);
+			produtoRepository.deleteById(id);
 
 		} catch (EmptyResultDataAccessException e) {
-			throw new ProdutoNaoEncontradoException(produtoId);
+			throw new ProdutoNaoEncontradoException(id);
 
 		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(String.format(MSG_PRODUTO_EM_USO, produtoId));
+			throw new EntidadeEmUsoException(String.format(MSG_PRODUTO_EM_USO, id));
 		}
 	}
 

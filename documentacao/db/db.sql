@@ -1,3 +1,12 @@
+CREATE TABLE IF NOT EXISTS `db_mateus`.`filiais` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `descricao` VARCHAR(45) NOT NULL UNIQUE,
+  `cnpj` VARCHAR(15) NOT NULL UNIQUE,  
+  
+  PRIMARY KEY (`id`)
+    )
+ENGINE = InnoDB charset = utf8 collate = utf8_bin;
+
 CREATE TABLE IF NOT EXISTS `db_mateus`.`produtos` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `sku` VARCHAR(45) NOT NULL UNIQUE,

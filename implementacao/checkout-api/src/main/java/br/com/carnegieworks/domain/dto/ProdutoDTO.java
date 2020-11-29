@@ -3,8 +3,10 @@ package br.com.carnegieworks.domain.dto;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,6 +33,8 @@ public class ProdutoDTO {
 
 	@Column(name = "quantidade", nullable = false)
 	@NotNull(message = "Uma quantidade de produto deve ser informada")
+	@PositiveOrZero
+	@DecimalMax("9999999.99")
 	private BigDecimal quantidade = BigDecimal.ZERO;
 	
 	@Column(name = "preco_unitario", nullable = false, length = 10, precision = 2)

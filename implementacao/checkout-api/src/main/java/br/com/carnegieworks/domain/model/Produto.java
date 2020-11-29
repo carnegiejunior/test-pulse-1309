@@ -7,8 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,6 +44,8 @@ public class Produto {
 
 	@Column(name = "quantidade", nullable = false,length = 10, precision = 2)
 	@NotNull(message = "Uma quantidade de produto deve ser informada")
+	@PositiveOrZero
+	@DecimalMax("9999999.99")
 	@JsonProperty("quantidade")
 	private BigDecimal quantidade = BigDecimal.ZERO;
 	
