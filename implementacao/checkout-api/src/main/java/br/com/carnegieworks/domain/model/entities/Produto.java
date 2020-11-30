@@ -1,4 +1,4 @@
-package br.com.carnegieworks.domain.model;
+package br.com.carnegieworks.domain.model.entities;
 
 import java.math.BigDecimal;
 

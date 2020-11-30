@@ -17,7 +17,7 @@ import br.com.carnegieworks.domain.exception.EntidadeEmUsoException;
 import br.com.carnegieworks.domain.exception.ProdutoNaoEncontradoException;
 import br.com.carnegieworks.domain.model.PageModel;
 import br.com.carnegieworks.domain.model.PageRequestModel;
-import br.com.carnegieworks.domain.model.Produto;
+import br.com.carnegieworks.domain.model.entities.Produto;
 import br.com.carnegieworks.domain.repository.ProdutoRepository;
 
 @Service
@@ -79,8 +79,8 @@ public class ProdutoService {
 	
 	}	
 	
-	public int updateQuantidade(Long id, ProdutoUpdateQuantidadeDTO produto) {
-		return produtoRepository.updateQuantidade(id,produto.getQuantidade());
+	public int updateQuantidade(Long id, ProdutoUpdateQuantidadeDTO produtoDTO) {
+		return produtoRepository.updateQuantidade(id, produtoDTO.getQuantidade());
 	}
 	
 }

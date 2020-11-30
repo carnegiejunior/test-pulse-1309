@@ -17,4 +17,7 @@ public class ProdutoUpdateQuantidadeDTO {
 
 	@NotNull(message = "Quantidade não pode ser nulo")
 	private BigDecimal quantidade;
+	
+//	@NotNull
+//	private Filial filial;
 }

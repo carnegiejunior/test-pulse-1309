@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import br.com.carnegieworks.domain.model.Produto;
+import br.com.carnegieworks.domain.model.entities.Produto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,7 +46,7 @@ public class ProdutoDTO {
 	@JsonProperty("url-foto-produto")
 	private String urlFotoProduto;
 	
-	public Produto transformToProduto() {
+	public Produto transfromToProduto() {
 		return new Produto(null, this.sku, this.descricao , this.quantidade, this.precoUnitario, this.urlFotoProduto);
 		
 	}

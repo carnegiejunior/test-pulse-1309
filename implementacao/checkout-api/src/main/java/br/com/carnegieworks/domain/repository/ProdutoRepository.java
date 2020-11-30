@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.carnegieworks.domain.model.Produto;
+import br.com.carnegieworks.domain.model.entities.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 //	@Query("SELECT DISTINCT u FROM users u WHERE u.email = ?1 AND u.password = ?2")

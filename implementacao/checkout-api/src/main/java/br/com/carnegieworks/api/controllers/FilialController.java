@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,32 +19,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.carnegieworks.domain.dto.ProdutoDTO;
-import br.com.carnegieworks.domain.dto.ProdutoUpdateQuantidadeDTO;
+import br.com.carnegieworks.domain.dto.FilialDTO;
 import br.com.carnegieworks.domain.model.PageModel;
 import br.com.carnegieworks.domain.model.PageRequestModel;
-import br.com.carnegieworks.domain.model.entities.Produto;
-import br.com.carnegieworks.domain.services.ProdutoService;
+import br.com.carnegieworks.domain.model.entities.Empresa;
+import br.com.carnegieworks.domain.model.entities.Filial;
+import br.com.carnegieworks.domain.services.EmpresaService;
+import br.com.carnegieworks.domain.services.FilialService;
 
 @RestController
-@RequestMapping(path = "produtos", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-public class ProdutoController {
+@RequestMapping(path = "filiais", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+public class FilialController {
 
 	@Autowired
-	private ProdutoService produtoService;
+	private FilialService filialService;
+	@Autowired
+	private EmpresaService empresaService;
 
 	@GetMapping
-	public ResponseEntity<PageModel<Produto>> listAll(@RequestParam(value = "page", defaultValue = "0") int page,
+	public ResponseEntity<PageModel<Filial>> listAll(@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "5") int size) {
 
 		Optional<PageRequestModel> optionalPageRequestModel = null;
-		Optional<PageModel<Produto>> optionalUserPageModel = null;
+		Optional<PageModel<Filial>> optionalUserPageModel = null;
 
 		optionalPageRequestModel = Optional.ofNullable(new PageRequestModel(page, size));
 
 		if (optionalPageRequestModel.isPresent()) {
 
-			optionalUserPageModel = this.produtoService.listAllOnLazyMode(optionalPageRequestModel);
+			optionalUserPageModel = this.filialService.listAllOnLazyMode(optionalPageRequestModel);
 			if (optionalUserPageModel.isPresent()) {
 				return ResponseEntity.ok(optionalUserPageModel.get());
 			}
@@ -55,36 +57,31 @@ public class ProdutoController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public Produto update(@RequestBody @Valid ProdutoDTO produtoDTO, @PathVariable(name = "id") Long id) {
-		return produtoService.update(produtoDTO, id);
+	public Filial update(@RequestBody @Valid FilialDTO filialDTO, @PathVariable(name = "id") Long id) {
+		return filialService.update(filialDTO, id);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Produto insert(@RequestBody @Valid ProdutoDTO produto) {
-		return this.produtoService.save(produto.transfromToProduto());
+	public Filial insert(@RequestBody @Valid FilialDTO filialDTO) {
+		
+		Empresa empresa = empresaService.findById(filialDTO.getEmpresa().getId());
+		filialDTO.setEmpresa(empresa);
+		return this.filialService.save(filialDTO.transfromToFilial());
 
 	}
 
 	@GetMapping(path = "/{id}")
-	public Produto findProdutoById(@PathVariable(name = "id") Long id) {
-		return produtoService.findById(id);
+	public Filial findFilialById(@PathVariable(name = "id") Long id) {
+		return filialService.findById(id);
 	}
 
 	// Gerar teste unitário
 
-	@PatchMapping(path = "/{id}")
-	public int updateQuantidade(@PathVariable(name = "id") Long id,
-			@RequestBody @Valid ProdutoUpdateQuantidadeDTO produtoUpdateQuantidadeDTO) {
-		ProdutoUpdateQuantidadeDTO produto = new ProdutoUpdateQuantidadeDTO();
-		produto.setQuantidade(produtoUpdateQuantidadeDTO.getQuantidade());
-		return produtoService.updateQuantidade(id, produto);
-	}
-
 	@DeleteMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable(name = "id") Long id) {
-		produtoService.delete(id);
+		filialService.delete(id);
 	}
 
 }
